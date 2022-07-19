@@ -1,5 +1,5 @@
 {
-  "name": "cy2",
+  "name": "cy2-azure",
   "version": "2.0.0",
   "author": "Andrew Goldis",
   "main": "./dist",
@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sorry-cypress/cy2.git"
+    "url": "https://github.com/sorry-cypress/cy2-azure.git"
   },
   "scripts": {
     "build": "run-s tsc swc",
@@ -30,7 +30,7 @@
     "dist/*"
   ],
   "bin": {
-    "cy2": "bin/cy2"
+    "cy2-azure": "bin/cy2-azure"
   },
   "engines": {
     "node": ">=10.0.0"
@@ -49,7 +49,7 @@
     "@types/debug": "^4.1.7",
     "@types/jest": "^27.0.1",
     "@types/js-yaml": "^4.0.3",
-    "@types/node": "^16.9.1",
+    "@types/node": "^18.0.0",
     "@types/npm-which": "^3.0.1",
     "chokidar": "^3.5.2",
     "esbuild": "^0.12.26",
