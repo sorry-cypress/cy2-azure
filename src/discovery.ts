@@ -10,6 +10,7 @@ import { getConfigFilesPaths_stateModule } from './discovery-state-module';
 export async function getConfigFilesPaths(
   cypressConfigFilePath: string | null = null
 ): Promise<ConfigFiles> {
+  let explicitConfigPaths = {};
   if (typeof cypressConfigFilePath === 'string') {
     const explicitPath = path.resolve(
       path.normalize(cypressConfigFilePath.trim())
@@ -21,7 +22,7 @@ export async function getConfigFilesPaths(
 
     // verify the path
     fs.statSync(explicitPath);
-    return {
+    explicitConfigPaths = {
       configFilePath: explicitPath,
       backupConfigFilePath: explicitPath.replace('app.yml', '_app.yml'),
     };
@@ -29,12 +30,15 @@ export async function getConfigFilesPaths(
 
   if (typeof process.env.CYPRESS_RUN_BINARY === 'string') {
     debug('CYPRESS_RUN_BINARY: %s', process.env.CYPRESS_RUN_BINARY);
-    return tryAll(() =>
-      getConfigFromElectronBinary(process.env.CYPRESS_RUN_BINARY as string)
-    );
+  } else {
+    debug('No CYPRESS_RUN_BINARY env var provided')
   }
 
-  return tryAll(getConfigFilesPaths_stateModule, getConfigFilesPaths_cli);
+  const implicitConfigPaths = typeof process.env.CYPRESS_RUN_BINARY === 'string' ? await tryAll(() =>
+  getConfigFromElectronBinary(process.env.CYPRESS_RUN_BINARY as string)
+  ) : await tryAll(getConfigFilesPaths_stateModule, getConfigFilesPaths_cli);
+
+  return { ...explicitConfigPaths, ...implicitConfigPaths };
 }
 
 async function tryAll(...fns) {

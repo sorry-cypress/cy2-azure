@@ -20,7 +20,7 @@ export async function patch(apiURL: string, cypressConfigFilePath?: string) {
     throw new Error('Missing apiURL');
   }
 
-  const { configFilePath, backupConfigFilePath } = await getConfigFilesPaths(
+  const { configFilePath, backupConfigFilePath, uploadLibFilePath, backupUploadLibFilePath } = await getConfigFilesPaths(
     cypressConfigFilePath
   );
 
@@ -35,6 +35,17 @@ export async function patch(apiURL: string, cypressConfigFilePath?: string) {
     fs.readFileSync(configFilePath, 'utf8')
   ) as CypressConfigDoc;
   doc.production.api_url = apiURL;
+  fs.writeFileSync(configFilePath, yaml.dump(doc));
+
+  debug('Patching cypress upload lib file: %s', uploadLibFilePath);
+  try {
+    fs.statSync(backupUploadLibFilePath);
+  } catch (e) {
+    fs.copyFileSync(uploadLibFilePath, backupUploadLibFilePath);
+  }
+
+  const uploadLibFile =  fs.readFileSync(uploadLibFilePath, 'utf8')
+  uploadLibFile.replace('body: buf,', 'body: buf, headers: { "x-ms-blob-type": "BlockBlob" },')
   fs.writeFileSync(configFilePath, yaml.dump(doc));
 }
 
