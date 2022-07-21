@@ -13,8 +13,8 @@ test('should use explicit path', async () => {
 
   expect(result.configFilePath).toMatch('explicitPath/config/app.yml');
   expect(result.backupConfigFilePath).toMatch('explicitPath/config/_app.yml');
-  expect(result.uploadLibFilePath).toMatch('explicitPath/config/upload.yml');
-  expect(result.backupUploadLibFilePath).toMatch('explicitPath/config/_upload.yml');
+  expect(result.uploadLibFilePath).toMatch('explicitPath/lib/upload.js');
+  expect(result.backupUploadLibFilePath).toMatch('explicitPath/lib/_upload.js');
   expect(fs.statSync).toHaveBeenCalledWith(
     expect.stringMatching('explicitPath')
   );

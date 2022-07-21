@@ -19,13 +19,13 @@ test('should patch', async () => {
 
   const configFilePath = path.resolve(__dirname, `${appConfigFilename}.yml`);
   const backupConfigFilePath = path.resolve(
-    __dirname,
-    `${appConfigFilename}_backup.yml`
+  __dirname,
+  `${appConfigFilename}_backup.yml`
   );
-  const uploadLibFilePath = path.resolve(__dirname, `${uploadLibFilename }.js`);
+  const uploadLibFilePath = path.resolve(__dirname, `${uploadLibFilename}.js`);
   const backupUploadLibFilePath = path.resolve(
   __dirname,
-  `${uploadLibFilename }_backup.js`
+  `${uploadLibFilename}_backup.js`
   );
 
   fs.copyFileSync(originalAppConfig, configFilePath);
