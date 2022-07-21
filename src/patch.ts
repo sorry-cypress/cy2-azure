@@ -44,9 +44,9 @@ export async function patch(apiURL: string, cypressConfigFilePath?: string) {
     fs.copyFileSync(uploadLibFilePath, backupUploadLibFilePath);
   }
 
-  const uploadLibFile =  fs.readFileSync(uploadLibFilePath, 'utf8')
-  uploadLibFile.replace('body: buf,', 'body: buf, headers: { "x-ms-blob-type": "BlockBlob" },')
-  fs.writeFileSync(configFilePath, yaml.dump(doc));
+  let uploadLibFile =  fs.readFileSync(uploadLibFilePath, 'utf8')
+  uploadLibFile = uploadLibFile.replace('body: buf,', 'body: buf, headers: { "x-ms-blob-type": "BlockBlob" },')
+  fs.writeFileSync(uploadLibFilePath, uploadLibFile);
 }
 
 interface CypressConfigDoc {
