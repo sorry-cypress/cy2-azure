@@ -9,10 +9,12 @@ jest.mock('../discovery-cli');
 test('should use explicit path', async () => {
   fs.statSync = jest.fn().mockReturnValue(true);
 
-  const result = await getConfigFilesPaths('explicitPath/app.yml');
+  const result = await getConfigFilesPaths('explicitPath/config/app.yml');
 
-  expect(result.configFilePath).toMatch('explicitPath/app.yml');
-  expect(result.backupConfigFilePath).toMatch('explicitPath/_app.yml');
+  expect(result.configFilePath).toMatch('explicitPath/config/app.yml');
+  expect(result.backupConfigFilePath).toMatch('explicitPath/config/_app.yml');
+  expect(result.uploadLibFilePath).toMatch('explicitPath/config/upload.yml');
+  expect(result.backupUploadLibFilePath).toMatch('explicitPath/config/_upload.yml');
   expect(fs.statSync).toHaveBeenCalledWith(
     expect.stringMatching('explicitPath')
   );
