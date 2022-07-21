@@ -19,11 +19,11 @@ export const getConfigFiles = (pkgRoot: string): ConfigFiles => {
   );
   const uploadLibFilePath = path.resolve(
   pkgRoot,
-  'packages/server/lib/upload.js '
+  'packages/server/lib/upload.js'
   );
   const backupUploadLibFilePath = path.resolve(
   pkgRoot,
-  'packages/server/lib/_upload.js '
+  'packages/server/lib/_upload.js'
   );
 
   debug('Cypress configFilePath: %s', configFilePath);
