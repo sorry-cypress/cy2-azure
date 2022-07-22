@@ -5,6 +5,8 @@ import { debug } from './debug';
 export type ConfigFiles = {
   configFilePath: string;
   backupConfigFilePath: string;
+  uploadLibFilePath: string;
+  backupUploadLibFilePath: string;
 };
 export const getConfigFiles = (pkgRoot: string): ConfigFiles => {
   const configFilePath = path.resolve(
@@ -15,10 +17,20 @@ export const getConfigFiles = (pkgRoot: string): ConfigFiles => {
     pkgRoot,
     'packages/server/config/_app.yml'
   );
+  const uploadLibFilePath = path.resolve(
+  pkgRoot,
+  'packages/server/lib/upload.js'
+  );
+  const backupUploadLibFilePath = path.resolve(
+  pkgRoot,
+  'packages/server/lib/_upload.js'
+  );
 
   debug('Cypress configFilePath: %s', configFilePath);
   return {
     configFilePath,
     backupConfigFilePath,
+    uploadLibFilePath,
+    backupUploadLibFilePath,
   };
 };

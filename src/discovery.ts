@@ -24,6 +24,8 @@ export async function getConfigFilesPaths(
     return {
       configFilePath: explicitPath,
       backupConfigFilePath: explicitPath.replace('app.yml', '_app.yml'),
+      uploadLibFilePath: explicitPath.replace('config/app.yml', 'lib/upload.js'),
+      backupUploadLibFilePath: explicitPath.replace('config/app.yml', 'lib/_upload.js'),
     };
   }
 

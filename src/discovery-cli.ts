@@ -4,8 +4,9 @@ import { platform } from 'os';
 import { debug } from './debug';
 
 import { getCypressCLIBinPath } from './bin-path';
+import { ConfigFiles, getConfigFiles } from "./files";
 
-export async function getConfigFilesPaths_cli() {
+export async function getConfigFilesPaths_cli(): Promise<ConfigFiles> {
   debug('Trying discovery via cypress CLI');
   const cliBinPath = await getCypressCLIBinPath();
 
@@ -15,24 +16,7 @@ export async function getConfigFilesPaths_cli() {
   const version = await getCypressVersion(cliBinPath);
   debug('Cypress version is: %s', version);
 
-  const configFilePath = path.resolve(
-    basePath,
-    version,
-    getPackagedPath(),
-    'app.yml'
-  );
-
-  const backupConfigFilePath = path.resolve(
-    basePath,
-    version,
-    getPackagedPath(),
-    '_app.yml'
-  );
-
-  return {
-    configFilePath,
-    backupConfigFilePath,
-  };
+  return getConfigFiles(path.resolve(basePath, version, getPackagedPath()));
 }
 
 async function getBasePath(binPath: string) {
@@ -55,9 +39,9 @@ async function getCypressVersion(binPath: string) {
 
 function getPackagedPath() {
   if (platform() === 'win32') {
-    return 'Cypress/resources/app/packages/server/config';
+    return 'Cypress/resources/app';
   }
-  return 'Cypress.app/Contents/Resources/app/packages/server/config';
+  return 'Cypress.app/Contents/Resources/app';
 }
 
 function execute(command): Promise<string> {
