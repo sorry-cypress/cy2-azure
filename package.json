@@ -1,6 +1,6 @@
 {
   "name": "cy2-azure",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "author": "Andrew Goldis",
   "main": "./dist",
   "typings": "./dist",
